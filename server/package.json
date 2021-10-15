@@ -1,0 +1,8 @@
+{
+  "name": "mcs-quiz-voting-server",
+  "version": "1.0.0",
+  "description": "mcs-quiz-voting-system",
+  "dependencies": {
+    "socket.io": "^4.3.0"
+  }
+}
