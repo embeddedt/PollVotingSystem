@@ -1,28 +1,19 @@
-const io = require('socket.io')({
-    cors: {
-        origin: ['http://localhost:3000']
-    }
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const io = require("./socket");
+const quizRouter = require("./api/quiz");
+const app = express();
+app.use(cors({ origin: process.env.FRONTEND, credentials: true }));
+app.use(cookieParser());
+app.use(express.json());
+
+app.use("/quiz", quizRouter);
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log("Listening on http://localhost:" + PORT);
+  io.listen(PORT);
 });
-
-io.on('connection', socket => {
-    console.log(`connect: ${socket.id}`);
-
-    // socket.on('hello!', () => {
-    //   console.log(`hello from ${socket.id}`);
-    // });
-
-    socket.on('disconnect', () => {
-        console.log(`disconnect: ${socket.id}`);
-    });
-
-    socket.on("join", (room) => {
-        console.log("Room: ", room);
-        socket.join(room)
-    });
-});
-
-io.listen(3001);
-
-setInterval(() => {
-    io.emit('message', new Date().toISOString());
-}, 1000);
