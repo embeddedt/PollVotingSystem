@@ -13,6 +13,7 @@
 
 .pollStartEnd:hover {
     background: #0a7d97;
+    cursor: pointer;
 }
 
 .returnHomePage {
