@@ -1,0 +1,27 @@
+.profViewContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.pollStartEnd {
+    background: #10b8fa;
+    padding: 5px;
+    margin: 3px;
+}
+
+.pollStartEnd:hover {
+    background: #0a7d97;
+}
+
+.returnHomePage {
+    display: inline-block;
+    padding: 3px;
+    background: #10b8fa;
+}
+
+.returnHomePage:hover {
+    cursor: pointer;
+    background: #0a7d97;
+}

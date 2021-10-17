@@ -1,0 +1,13 @@
+.optionButton {
+    padding: 6px;
+    margin: 2px;
+    text-align: center;
+    display: inline-block;
+    background: #03c3f3;
+    border-radius: 30%;
+}
+
+.optionButton:hover {
+    background: #0fa6ec;
+    cursor: pointer;
+}

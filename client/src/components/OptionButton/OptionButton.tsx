@@ -1,9 +1,14 @@
 import React from "react";
+import styles from "./OptionButton.module.css";
 
-export const OptionButton = () => {
-    return (
-        <div>
-            BUTTON
-        </div>
-    )
+interface buttonTypes {
+  name: String;
 }
+
+export const OptionButton = ({ name }: buttonTypes) => {
+  return (
+    <div className={styles.optionButton}>
+      {name}
+    </div>
+  );
+};
