@@ -1,0 +1,23 @@
+.studentView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.studentViewButtons {
+    display: flex;
+    margin-left: 47%;
+    margin-right: 47%;
+    flex-direction: column;
+}
+
+.clearCookies {
+    border: 3px solid #046480;
+    display: inline-block;
+    padding: 2px;
+    background: #03c3f3;
+}
+
+.clearCookies:hover {
+    background: #0fa6ec;
+    cursor: pointer;
+}
