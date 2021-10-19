@@ -7,6 +7,7 @@ import Cookies from "universal-cookie";
 
 const App = () => {
   // TODO: Need to "lock" each user to their respective views
+
   const cookie = new Cookies();
   return (
     <BrowserRouter>

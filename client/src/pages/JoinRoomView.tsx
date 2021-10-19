@@ -17,7 +17,6 @@ export const JoinRoomView = () => {
     if (getRoomCode !== "") {
       cookies.set("roomCode", getRoomCode);
       history.push("/student");
-      console.log(cookies.get("abcd"));
     }
     e.preventDefault();
   };
@@ -30,7 +29,7 @@ export const JoinRoomView = () => {
     <>
       {/* Can be div instead of a form lol*/}
       <form onSubmit={(e) => joinRoom(e)}>
-        <input type={"text"} placeholder={"Join Room Code"} value={getRoomCode} onChange={(e) => updateRoomCode(e)} />
+        <input type={"text"} placeholder={"Join Room Code"} onChange={(e) => updateRoomCode(e)} value={getRoomCode} />
         <br />
         <input type={"submit"} value={"Join Room"} />
       </form>
