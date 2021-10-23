@@ -8,43 +8,40 @@ export const StudentView = () => {
   const cookies = new Cookies();
   const options = "ABCDEF".split("");
   const optionButtons = options.map((name, idx) => {
-    return (<OptionButton name={name} key={idx} onClick={() => sendButton(name)} />);
+    return (
+      <OptionButton name={name} key={idx} onClick={() => sendButton(name)} />
+    );
   });
-  const [connected, setConnected] = useState(false);
-  const socket = io("localhost:3001");
-  const roomCode = cookies.get("roomCode");
 
+  const socket = io("localhost:3001");
+  const [roomCode, setRoomCode] = useState(cookies.get("roomCode"));
+  const [connected, setConnected] = useState(true);
+
+  socket.on("connect", () => {
+    console.log("Connected to Socket");
+  });
+
+  socket.on("close", (e) => {
+    const { quizId } = e;
+    console.log("Room Code:", roomCode);
+    if (connected && quizId === roomCode) {
+      console.log("Disconnected from Socket");
+      cookies.remove("roomCode");
+      setRoomCode(null);
+      setConnected(false);
+    }
+  });
 
   useEffect(() => {
     if (!connected) {
-      socket.on("connect", () => {
-        console.log("Connected to Socket");
-        setConnected(true);
-      });
-    }
-    return () => {
-      // socket.off("connect");
-    };
-  });
-
-  useEffect(() => {
-    if (connected) {
-      socket.on("close", (e) => {
-        if (connected) {
-          const { quizId } = e;
-          console.log("Room Code: ", roomCode);
-          if (quizId === roomCode) {
-            console.log("Disconnected from Socket");
-            setConnected(false);
-            socket.off("close");
-          }
-        }
-      });
+      socket.disconnect();
+    } else {
+      socket.connect();
     }
   });
 
   const sendButton = (buttonName: string) => {
-    socket.emit("studentVote", { "button": buttonName, "student#": 1234 });
+    socket.emit("studentVote", { button: buttonName, "student#": 1234 });
   };
 
   const clearCookiesRedirect = () => {
@@ -56,14 +53,13 @@ export const StudentView = () => {
     <>
       <div className={styles.studentView}>
         VOTE
-        <div className={styles.studentViewButtons}>
-          {optionButtons}
-        </div>
+        <div className={styles.studentViewButtons}>{optionButtons}</div>
       </div>
-      <div>
-        Is Connected: {connected ? "Yes" : "No"}
-      </div>
-      <div className={styles.clearCookies} onClick={() => clearCookiesRedirect()}>
+      <div>Is Connected: {connected ? roomCode : "Not Connected"}</div>
+      <div
+        className={styles.clearCookies}
+        onClick={() => clearCookiesRedirect()}
+      >
         Clear Cookies
       </div>
     </>
