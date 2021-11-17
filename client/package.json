@@ -28,6 +28,7 @@
     "universal-cookie": "^4.0.4",
     "web-vitals": "^1.0.1"
   },
+  "proxy": "http://voteapi:3001",
   "scripts": {
     "start": "craco start",
     "build": "craco build",

@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const instance = axios.create({
   baseURL: "http://localhost:3001",
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
