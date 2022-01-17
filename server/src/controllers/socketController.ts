@@ -74,27 +74,9 @@ async function vote(socket: Socket, answer: number, utorid: string) {
     if (answer === undefined || answer === null)
       throw { code: 2, message: "Invalid answer" };
 
-    // const result = await PollModel.updateOne(
-    //   {
-    //     _id: pollId,
-    //     students: {
-    //       $elemMatch: {
-    //         utorid: utorid,
-    //         sequence: parseInt(currSequence),
-    //       },
-    //     },
-    //   },
-    //   {
-    //     $set: {
-    //       "students.$.answer": answer,
-    //       "students.$.timestamp": new Date(),
-    //     },
-    //   }
-    // );
-
-    //if (result.modifiedCount == 0)
     await StudentModel.updateOne(
       {
+        utorid,
         pollId,
         sequence: parseInt(currSequence),
       },
