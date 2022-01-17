@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  caching:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      backend:
+        aliases:
+          - redis
+    volumes:
+      - RedisVolume:/data
+    command: redis-server --appendonly yes --requirepass password
+  mongodb:
+    container_name: mongo
+    image: mongo:4.4
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=quiz
+      - TZ=America/New_York
+    ports:
+      - "27018:27017"
+    networks:
+      backend:
+        aliases:
+          - mongo
+    volumes:
+      - MongodbVolume:/data/db
+  migration:
+    container_name: migration
+    image: python:3
+    depends_on:
+      - mongodb
+    build:
+      context: ./migration
+      dockerfile: Dockerfile
+    networks:
+      backend:
+        aliases:
+          - migration
+volumes:
+  RedisVolume:
+  MongodbVolume:
+
+networks:
+  backend:
+
